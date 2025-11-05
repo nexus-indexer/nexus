@@ -7,9 +7,8 @@ use serde::{Deserialize, Serialize};
 
 // use crate::db::store_event_to_db;
 
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
-
 // Event => Struct for monitoring events
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct Event {
     pub address: Address,
     pub block_number: u64,
@@ -18,9 +17,8 @@ pub struct Event {
     pub data: Bytes,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, Default, SimpleObject)]
-
 // DisplayEvent => Struct to display events
+#[derive(Serialize, Deserialize, Debug, Clone, Default, SimpleObject)]
 pub struct DisplayEvent {
     pub address: String,
     pub block_number: String,
@@ -29,9 +27,8 @@ pub struct DisplayEvent {
     pub data: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, Default)]
-
 // Monitoring and getting of the Transactions
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct Tx {
     pub hash: B256,
     pub nonce: u64,
@@ -46,14 +43,12 @@ pub struct Tx {
     pub data: Bytes,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
-
 // The struct to index for the event and for transactions
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum IndexingMode {
     Transaction,
     Event,
 }
-
 
 impl From<Transaction> for Tx {
     fn from(tx: Transaction) -> Self {
