@@ -1,11 +1,10 @@
+use crate::db::store_event_to_db;
 use alloy::{
     primitives::{Address, B256, Bytes, U256},
     rpc::types::eth::{Log, Transaction, TransactionTrait},
 };
 use async_graphql::SimpleObject;
 use serde::{Deserialize, Serialize};
-
-// use crate::db::store_event_to_db;
 
 // Event => Struct for monitoring events
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
@@ -104,7 +103,7 @@ impl Event {
         db_client: &mut tokio_postgres::Client,
         name: &str,
     ) -> Result<(), anyhow::Error> {
-        // store_event_to_db(self, db_client, name).await?;
+        store_event_to_db(self, db_client, name).await?;
 
         Ok(())
     }
