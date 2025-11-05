@@ -1,1 +1,3 @@
-pub mod types;
+pub fn monitor() {
+    println!("Monitoring started...");
+}
