@@ -4,3 +4,12 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
+anyhow.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+async-graphql = "7.0.17"
+async-graphql-axum = "7.0.17"
+axum = "0.8.6"
+
+primitives = {path = "../../crates/primitives"}
