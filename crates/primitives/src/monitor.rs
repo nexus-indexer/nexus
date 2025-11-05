@@ -1,6 +1,6 @@
 use alloy::{
-    primitives::{Address, Bytes, B256, U256},
-    rpc::types::eth::{Log, Transaction},
+    primitives::{Address, B256, Bytes, U256},
+    rpc::types::eth::{Log, Transaction, TransactionTrait},
 };
 use async_graphql::SimpleObject;
 use serde::{Deserialize, Serialize};
@@ -38,7 +38,7 @@ pub struct Tx {
     pub to: Address,
     pub value: U256,
     pub gas_price: u128,
-    pub gas: u128,
+    pub gas_limit: u64,
     pub max_fee_per_gas: u128,
     pub data: Bytes,
 }
@@ -53,17 +53,17 @@ pub enum IndexingMode {
 impl From<Transaction> for Tx {
     fn from(tx: Transaction) -> Self {
         Self {
-            hash: tx.hash,
-            nonce: tx.nonce,
+            hash: *tx.inner.tx_hash(),
+            nonce: tx.nonce(),
             block_hash: tx.block_hash.unwrap_or(B256::default()),
             block_number: tx.block_number.unwrap_or(0),
-            from: tx.from,
-            to: tx.to.unwrap_or(Address::ZERO),
-            value: tx.value,
-            gas_price: tx.gas_price.unwrap_or(0),
-            gas: tx.gas,
-            data: tx.input,
-            max_fee_per_gas: tx.max_fee_per_gas.unwrap_or(0),
+            from: tx.inner.signer(),
+            to: tx.inner.to().unwrap_or(Address::ZERO),
+            value: tx.value(),
+            gas_price: tx.gas_price().unwrap_or(0),
+            gas_limit: tx.gas_limit(),
+            data: tx.input().clone(),
+            max_fee_per_gas: tx.max_fee_per_gas(),
         }
     }
 }
