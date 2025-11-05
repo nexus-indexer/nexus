@@ -81,7 +81,12 @@ impl From<Log> for Event {
 }
 
 impl DisplayEvent {
-    pub fn new( address: String, block_number: String, transaction_hash: String, topics: Vec<String>, data: String,
+    pub fn new(
+        address: String,
+        block_number: String,
+        transaction_hash: String,
+        topics: Vec<String>,
+        data: String,
     ) -> Self {
         Self {
             address,
@@ -104,4 +109,3 @@ impl Event {
         Ok(())
     }
 }
-
