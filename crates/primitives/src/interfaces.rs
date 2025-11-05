@@ -1,7 +1,7 @@
 use crate::monitor::Tx;
 use async_trait::async_trait;
 
-/// The purpose of event monitoring triat is that is would be shared across many supported chains
+/// The purpose of event monitoring triat is that it would be shared across many supported chains
 #[async_trait]
 pub trait EventMonitor {
     type SubProvider;
