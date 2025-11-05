@@ -3,7 +3,7 @@ use async_trait::async_trait;
 
 /// The purpose of event monitoring triat is that is would be shared across many supported chains
 #[async_trait]
-pub trait EventIndexer {
+pub trait EventMonitor {
     type SubProvider;
     type ContractAddress;
     type EventSignature;
@@ -34,7 +34,7 @@ pub trait EventIndexer {
 /// This transaction tx monitor (indexer) trait is planned to be used across many supported chains
 
 #[async_trait]
-pub trait ChronicleTransactionIndexer {
+pub trait TransactionMonitor {
     type SubProvider;
     type TargetAddress;
 
