@@ -3,11 +3,11 @@
 version = 4
 
 [[package]]
-name = "nexus"
+name = "indexer"
 version = "0.1.0"
 
 [[package]]
-name = "primitives"
+name = "nexus"
 version = "0.1.0"
 
 [[package]]
