@@ -23,7 +23,7 @@ pub async fn run() -> Result<(), Box<dyn std::error::Error>> {
     // monitor config
     let monitor_configs = config.clone().monitor;
 
-    tracing::info!("Starting Chronicle with config: {:?}", config.clone());
+    tracing::info!("Starting Nexus with config: {:?}", config.clone());
 
     let mut tasks = vec![ServerTask::new(server_config).boxed()];
 

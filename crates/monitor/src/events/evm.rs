@@ -19,9 +19,9 @@ pub async fn query_events(
         .event_signature(event_sig)
         .from_block(block_number);
     let log = provider.get_logs(&filter).await?;
-    let chronicle_logs: Vec<Event> = log.into_iter().map(|log| log.into()).collect();
+    let logs: Vec<Event> = log.into_iter().map(|log| log.into()).collect();
 
-    Ok(chronicle_logs)
+    Ok(logs)
 }
 
 pub async fn subscribe_to_events(
