@@ -11,7 +11,7 @@ pub trait EventMonitor {
 
     /// The purpose of this function is to querry events from a specified clock number
     /// Then `[Filter]` which would have `address`, `last_block` and event_signature as the parameters
-    async fn query_events(
+    async fn query_and_subscribe_to_events(
         &self,
         provider: Self::SubProvider,
         addr: Self::ContractAddress,
