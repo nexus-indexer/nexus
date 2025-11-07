@@ -7,6 +7,7 @@ edition.workspace = true
 alloy.workspace = true
 anyhow.workspace = true
 async-trait.workspace = true
+futures.workspace = true
 postgres.workspace = true
 serde.workspace = true
 serde_json.workspace = true
@@ -14,3 +15,5 @@ tokio.workspace = true
 tokio-postgres.workspace = true
 
 async-graphql = "7.0.17"
+
+primitives = {path = "../../crates/primitives"}

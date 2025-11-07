@@ -7,7 +7,7 @@ members = ["bin/nexus", "crates/*"]
 resolver = "3"
 
 [workspace.dependencies]
-alloy = "1.1.0"
+alloy = { version = "1.1.0", features = ["full"] }
 anyhow = "1.0.100"
 async-trait = "0.1.89"
 futures = "0.3.31"
