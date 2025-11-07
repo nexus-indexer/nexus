@@ -1,17 +1,15 @@
 use alloy::{
     dyn_abi::{DecodedEvent, DynSolEvent, DynSolType},
+    network::Ethereum,
     primitives::{Address, B256, Bytes, LogData},
     providers::{Provider, RootProvider},
     rpc::types::eth::{BlockNumberOrTag, Filter},
 };
 use futures::StreamExt;
-use primitives::{
-    db::store_event_to_db,
-    monitor::Event,
-};
+use primitives::{db::store_event_to_db, monitor::Event};
 
 pub async fn query_events(
-    provider: RootProvider,
+    provider: RootProvider<Ethereum>,
     addr: Address,
     event_sig: B256,
     block_number: BlockNumberOrTag,
@@ -27,7 +25,7 @@ pub async fn query_events(
 }
 
 pub async fn subscribe_to_events(
-    provider: RootProvider,
+    provider: RootProvider<Ethereum>,
     addr: Vec<Address>,
     event_sig: B256,
     client: &mut tokio_postgres::Client,

@@ -9,11 +9,7 @@ pub struct QueryRoot;
 
 #[Object]
 impl QueryRoot {
-    async fn get_all_events<'a>(
-        &self,
-        cxt: &Context<'a>,
-        name: String,
-    ) -> Vec<DisplayEvent> {
+    async fn get_all_events<'a>(&self, cxt: &Context<'a>, name: String) -> Vec<DisplayEvent> {
         let config = cxt.data_unchecked::<ServerConfig>();
         let mut db_client = create_db_instance(&config.db_url)
             .await

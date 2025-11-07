@@ -1,9 +1,9 @@
-use async_graphql::{http::GraphiQLSource, EmptyMutation, EmptySubscription, ObjectType, Schema};
+use async_graphql::{EmptyMutation, EmptySubscription, ObjectType, Schema, http::GraphiQLSource};
 use async_graphql_axum::GraphQL;
 use axum::{
+    Router,
     response::{self, IntoResponse},
     routing::get,
-    Router,
 };
 use primitives::ServerConfig;
 use tokio::net::TcpListener;
@@ -18,7 +18,7 @@ async fn graphiql() -> impl IntoResponse {
 /// This function is used to run the chronicle server.
 /// `[DB]` This is a generic type, which is used to store the database.
 /// `[Query]` This is a gaint Query entity, for all the Events enitities and all the tx enitities.
-pub async fn run_chronicle_server<Query>(
+pub async fn run_server<Query>(
     config: ServerConfig,
     query: Query,
 ) -> Result<(), anyhow::Error>
