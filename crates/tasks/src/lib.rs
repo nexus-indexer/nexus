@@ -1,14 +1,56 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+pub mod monitor;
+pub mod server;
+
+use async_trait::async_trait;
+use futures::{Future, future::try_join_all};
+use tokio::sync::mpsc;
+use tokio_util::sync::CancellationToken;
+use tracing::{error, info};
+
+#[async_trait]
+pub trait Task: Sync + Send + 'static {
+    /// Run the tasks
+    async fn run(self: Box<Self>, shutdown_token: CancellationToken) -> anyhow::Result<()>;
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+/// This takes in a list of tasks and runs them concurrently and waiting for a shutdown signal.
+pub async fn spawn_tasks<T, R, E>(tasks: impl IntoIterator<Item = Box<dyn Task>>, signal: T)
+where
+    T: Future<Output = Result<R, E>> + Send + 'static,
+    E: std::fmt::Debug,
+{
+    let (shutdown_scope, mut shutdown_wait) = mpsc::channel::<()>(1);
+    let shutdown_token = CancellationToken::new();
+    let mut shutdown_scope = Some(shutdown_scope);
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    let handles = tasks.into_iter().map(|task| {
+        let st = shutdown_token.clone();
+        let ss = shutdown_scope.clone();
+        async move {
+            let ret = task.run(st).await;
+            drop(ss);
+            ret
+        }
+    });
+
+    // Running section on operational taskes and shutdown signal
+    tokio::select! {
+        res = try_join_all(handles) => {
+            error!("Task exited unexpectedly: {res:?}");
+        }
+        res = signal => {
+            match res {
+                Ok(_) => {
+                    info!("Received signal, shutting down");
+                }
+                Err(err) => {
+                    error!("Error while waiting for signal: {err:?}");
+                }
+            }
+        }
     }
+
+    shutdown_token.cancel();
+    shutdown_scope.take();
+    shutdown_wait.recv().await;
 }
