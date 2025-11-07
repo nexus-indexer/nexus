@@ -10,16 +10,6 @@ pub enum StateMachine {
     PARACHAIN,
 }
 
-// #[derive(Serialize, Deserialize, Debug, Clone)]
-// pub struct Config {
-//     /// This is the name of the chronicle server
-//     pub name: Option<String>,
-//     /// This is a list of all the indexer Config
-//     pub indexer: Vec<IndexerConfig>,
-//     /// Server config
-//     pub server: ServerConfig,
-// }
-
 
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
