@@ -43,7 +43,7 @@ impl Task for MonitorTask {
                     }
                 }
                 _ = shutdown_token.cancelled() => {
-                    info!("Shutting down chronicle indexer");
+                    info!("Shutting down indexer");
                 }
             }
         });
