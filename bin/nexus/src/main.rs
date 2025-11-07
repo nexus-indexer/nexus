@@ -1,6 +1,3 @@
-// This file is part of Nexus.
-
-
 pub mod cli;
 
 #[tokio::main]
