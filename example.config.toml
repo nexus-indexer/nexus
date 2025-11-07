@@ -1,0 +1,14 @@
+name = "nexus"
+
+[[monitor]]
+event_name = "uni_transfers"
+state_machine = "EVM"
+rpc_url = "wss://ethereum-rpc.publicnode.com"
+address = "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984" # UNI token
+event_signature = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef" # Transfer(address,address,uint256)
+block_number = 23740979
+db_url = "host=localhost user=postgres password="
+
+[server]
+db_url = "host=localhost user=postgres"
+server_url = "127.0.0.1:8010"
