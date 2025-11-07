@@ -1,14 +1,14 @@
-use serde::{Deserialize, Serialize};
-
 pub mod db;
 pub mod error;
 pub mod monitor;
 pub mod traits;
 
+use serde::{Deserialize, Serialize};
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Config {
     pub name: Option<String>,
-    pub indexer: Vec<IndexerConfig>,
+    pub monitor: Vec<MonitorConfig>,
     pub server: ServerConfig,
 }
 
@@ -19,7 +19,7 @@ pub struct ServerConfig {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct IndexerConfig {
+pub struct MonitorConfig {
     pub event_name: String,
     pub rpc_url: String,
     pub address: String,
