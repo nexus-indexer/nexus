@@ -15,3 +15,5 @@ tokio.workspace = true
 tokio-postgres.workspace = true
 
 async-graphql = "7.0.17"
+
+primitives = {path = "../../crates/primitives"}

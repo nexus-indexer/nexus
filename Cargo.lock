@@ -2661,6 +2661,7 @@ dependencies = [
  "async-trait",
  "futures",
  "postgres",
+ "primitives",
  "serde",
  "serde_json",
  "tokio",
