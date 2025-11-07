@@ -1,22 +1,19 @@
 use alloy::{
+    network::Ethereum,
     primitives::Address,
-    providers::{Provider, ProviderBuilder, WsConnect},
+    providers::{Provider, RootProvider},
     rpc::types::{Block, Transaction, TransactionTrait},
 };
 use futures::StreamExt;
 
 pub async fn subscribe_transactions<F>(
     index_address: Address,
-    ws_url: &str,
+    provider: RootProvider<Ethereum>,
     mut callback: F,
 ) -> Result<(), anyhow::Error>
 where
     F: FnMut(Vec<Transaction>),
 {
-    // Create WebSocket provider
-    let ws = WsConnect::new(ws_url);
-    let provider = ProviderBuilder::new().connect_ws(ws).await?;
-
     // Subscribe to new blocks
     let subscription = provider.subscribe_blocks().await?;
     let mut stream = subscription.into_stream();
@@ -58,18 +55,25 @@ where
 pub mod tests {
     use super::*;
     use alloy::primitives::address;
+    use alloy::providers::{Provider, ProviderBuilder};
+    use alloy::rpc::client::WsConnect;
 
     #[tokio::test]
     #[ignore]
     pub async fn test_subscribe_transactions_works() {
         let rpc_url = "wss://ethereum-rpc.publicnode.com";
+
+        // Create WebSocket provider
+        let ws = WsConnect::new(rpc_url);
+        let provider = ProviderBuilder::new().connect_ws(ws).await.unwrap();
+
         let usdc_token_address = address!("a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48");
 
         let callback = |tx: Vec<Transaction>| {
             println!("Received Tx: {:?}", tx);
         };
 
-        subscribe_transactions(usdc_token_address, rpc_url, callback)
+        subscribe_transactions(usdc_token_address, provider.root().clone(), callback)
             .await
             .unwrap();
     }
