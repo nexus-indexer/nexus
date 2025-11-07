@@ -218,7 +218,6 @@ use alloy::{
     pubsub::PubSubFrontend,
     rpc::types::eth::{BlockNumberOrTag, Filter},
 };
-use anyhow::Ok;
 use chronicle_primitives::{db::DatabaseManager, indexer::ChronicleEvent};
 use futures_util::stream::StreamExt;
 
