@@ -4,3 +4,16 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
+alloy.workspace = true
+anyhow.workspace = true
+async-trait.workspace = true
+futures.workspace = true
+postgres.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+tokio-util = "0.7.17"
+
+monitor = { path = "../../crates/monitor" }
+primitives = { path = "../../crates/primitives" }
+server = { path = "../../crates/server" }
