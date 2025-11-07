@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 pub mod db;
 pub mod error;
-pub mod interfaces;
+pub mod traits;
 pub mod monitor;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
