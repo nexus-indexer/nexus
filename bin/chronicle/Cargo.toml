@@ -1,0 +1,20 @@
+[package]
+name = "chronicle"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tokio-postgres.workspace = true
+
+
+clap = {version = "4.5.1", features = ["derive"]}
+
+toml = "0.8.10"
+chronicle-primitives = { path = "../../crates/primitives" }
+chronicle-tasks = { path = "../../crates/tasks" }
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+atty = "0.2.14"
+tokio-util = "0.7.10"

@@ -1,22 +1,22 @@
 [package]
-name = "chronicle-server"
+name = "chronicle-indexer"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+alloy.workspace = true
 anyhow.workspace = true
+futures-core.workspace = true
 tokio.workspace = true
-tracing.workspace = true
+serde_json.workspace = true
+futures-util.workspace = true
+async-trait.workspace = true
 postgres.workspace = true
 tokio-postgres.workspace = true
 
 
-async-graphql = "7.0.3"
-async-graphql-axum = "7.0.3"
-axum = "0.7.5"
-
-
 
 chronicle-primitives = { path = "../../crates/primitives" }
+alloy-sol-types = { git = "https://github.com/alloy-rs/core" }

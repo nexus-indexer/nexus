@@ -1,19 +1,25 @@
 [package]
-name = "tasks"
+name = "chronicle-tasks"
 version.workspace = true
 edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-alloy.workspace = true
-anyhow.workspace = true
 async-trait.workspace = true
-futures.workspace = true
-postgres.workspace = true
 tokio.workspace = true
+anyhow.workspace = true
+futures.workspace = true
 tracing.workspace = true
+alloy.workspace = true
+postgres.workspace = true
 
-tokio-util = "0.7.17"
 
-monitor = { path = "../../crates/monitor" }
-primitives = { path = "../../crates/primitives" }
-server = { path = "../../crates/server" }
+
+tokio-util = "0.7.8"
+chronicle-primitives = { path = "../../crates/primitives" }
+chronicle-server = { path = "../../crates/server" }
+chronicle-indexer = { path = "../../crates/indexer" }

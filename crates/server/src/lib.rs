@@ -1,24 +1,23 @@
-use async_graphql::{EmptyMutation, EmptySubscription, ObjectType, Schema, http::GraphiQLSource};
+use async_graphql::{http::GraphiQLSource, EmptyMutation, EmptySubscription, ObjectType, Schema};
 use async_graphql_axum::GraphQL;
 use axum::{
-    Router,
     response::{self, IntoResponse},
     routing::get,
+    Router,
 };
-use primitives::ServerConfig;
+use chronicle_primitives::ServerConfig;
 use tokio::net::TcpListener;
-
-pub mod db_query;
+pub mod query;
 
 /// This function is used to serve the graphQL server and GraphiQL IDE.
 async fn graphiql() -> impl IntoResponse {
     response::Html(GraphiQLSource::build().endpoint("/").finish())
 }
 
-/// This function is used to run the server.
+/// This function is used to run the chronicle server.
 /// `[DB]` This is a generic type, which is used to store the database.
-/// `[Query]` This is a gaint Query entity, for all the Events enitities and all the tx enitities.
-pub async fn run_server<Query>(
+/// `[Query]` This is a gain Query entity, for all the Events entities and all the tx entities.
+pub async fn run_chronicle_server<Query>(
     config: ServerConfig,
     query: Query,
 ) -> Result<(), anyhow::Error>
@@ -32,9 +31,8 @@ where
     let app = Router::new().route("/", get(graphiql).post_service(GraphQL::new(schema)));
 
     tracing::info!(url);
-    axum::serve(TcpListener::bind(url).await.unwrap(), app)
-        .await
-        .unwrap();
+    axum::serve(TcpListener::bind(url).await?, app)
+        .await?;
 
     Ok(())
 }

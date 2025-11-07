@@ -1,29 +1,84 @@
 pub mod db;
-pub mod error;
-pub mod monitor;
-pub mod traits;
-
+pub mod errors;
+pub mod indexer;
+pub mod interfaces;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+pub enum StateMachine {
+    EVM,
+    PARACHAIN,
+}
+
+// #[derive(Serialize, Deserialize, Debug, Clone)]
+// pub struct Config {
+//     /// This is the name of the chronicle server
+//     pub name: Option<String>,
+//     /// This is a list of all the indexer Config
+//     pub indexer: Vec<IndexerConfig>,
+//     /// Server config
+//     pub server: ServerConfig,
+// }
+
+
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Config {
+    /// This is the name of the chronicle server
     pub name: Option<String>,
-    pub monitor: Vec<MonitorConfig>,
+    /// Database configuration
+    pub database: DatabaseConfig,
+    /// Server config
     pub server: ServerConfig,
+    /// This is a list of all the indexer Config
+    pub indexer: Vec<IndexerConfig>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct DatabaseConfig {
+    pub host: String,
+    pub port: u16,
+    pub username: String,
+    pub password: String,
+    pub database: String,
+    pub max_connections: Option<u32>,
+    pub partition_by_year: bool,
+    pub initial_years: Vec<i32>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ServerConfig {
+    /// This is the URL of the database
     pub db_url: String,
+    /// This is the URL of the server
     pub server_url: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct MonitorConfig {
+pub struct IndexerConfig {
+    /// this is the name of the event, this is the name that the DB table is going to be named
     pub event_name: String,
+    /// This is represents the statemachaine to be indexed
+    pub state_machine: String,
+    /// This is the RPC url of the state machine
     pub rpc_url: String,
+    /// This is the address of the contract that is to be indexed
     pub address: String,
+    /// This is the event signature of the event that is to be indexed
     pub event_signature: String,
+    /// This is the block number to start indexing from
     pub block_number: u64,
+    /// This is the URL of the database
     pub db_url: String,
+}
+
+impl From<String> for StateMachine {
+    fn from(s: String) -> Self {
+        let s = s.as_str();
+        match s {
+            "EVM" => Self::EVM,
+            "PARACHAIN" => Self::PARACHAIN,
+            _ => panic!("Invalid state machine"),
+        }
+    }
 }

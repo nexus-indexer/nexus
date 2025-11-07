@@ -1,15 +1,16 @@
-pub mod monitor;
+pub mod indexer;
 pub mod server;
 
 use async_trait::async_trait;
-use futures::{Future, future::try_join_all};
+use futures::{future::try_join_all, Future};
 use tokio::sync::mpsc;
 use tokio_util::sync::CancellationToken;
 use tracing::{error, info};
 
+/// Core task trait implemented by top level Chronicle tasks.
 #[async_trait]
 pub trait Task: Sync + Send + 'static {
-    /// Run the tasks
+    /// Run the task.
     async fn run(self: Box<Self>, shutdown_token: CancellationToken) -> anyhow::Result<()>;
 }
 
@@ -33,7 +34,7 @@ where
         }
     });
 
-    // Running section on operational taskes and shutdown signal
+    // Running section on operational tasks and shutdown signal
     tokio::select! {
         res = try_join_all(handles) => {
             error!("Task exited unexpectedly: {res:?}");
