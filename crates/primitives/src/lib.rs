@@ -2,8 +2,8 @@ use serde::{Deserialize, Serialize};
 
 pub mod db;
 pub mod error;
-pub mod traits;
 pub mod monitor;
+pub mod traits;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Config {

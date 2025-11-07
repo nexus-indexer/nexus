@@ -1,12 +1,12 @@
 pub mod evm;
 
-use evm::{query_events, subscribe_to_events};
 use alloy::{
     primitives::{Address, B256},
     providers::RootProvider,
     rpc::types::eth::BlockNumberOrTag,
 };
 use async_trait::async_trait;
+use evm::{query_events, subscribe_to_events};
 use primitives::{
     db::{create_new_event_db_table, store_event_to_db},
     traits::EventMonitor,
@@ -28,7 +28,7 @@ impl EventMonitor for EventMonitorTable {
     type ContractAddress = Address;
     type EventSignature = B256;
     type BlockNumber = BlockNumberOrTag;
-    
+
     async fn query_and_subscribe_to_events(
         &self,
         provider: Self::SubProvider,

@@ -5,10 +5,7 @@ use alloy::{
     rpc::types::eth::{BlockNumberOrTag, Filter},
 };
 use futures::StreamExt;
-use primitives::{
-    db::store_event_to_db,
-    monitor::Event,
-};
+use primitives::{db::store_event_to_db, monitor::Event};
 
 pub async fn query_events(
     provider: RootProvider,
